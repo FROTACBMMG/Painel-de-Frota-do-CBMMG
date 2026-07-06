@@ -1,0 +1,298 @@
+﻿/* ==========================================================
+   PAINEL DA FROTA CBMMG
+   style.css
+========================================================== */
+
+:root{
+
+    --vermelho:#b00020;
+    --vermelho-claro:#d32f2f;
+    --cinza:#f3f5f7;
+    --cinza-card:#ffffff;
+    --texto:#303030;
+    --borda:#d9d9d9;
+    --verde:#28a745;
+    --laranja:#ff9800;
+    --azul:#1565c0;
+
+}
+
+body{
+
+    background:var(--cinza);
+    font-family:Segoe UI,Tahoma,Geneva,Verdana,sans-serif;
+    color:var(--texto);
+
+}
+
+.navbar{
+
+    background:linear-gradient(90deg,#7d0000,#b00020);
+    height:65px;
+
+}
+
+.navbar-brand{
+
+    font-size:24px;
+    font-weight:700;
+    letter-spacing:1px;
+
+}
+
+.navbar-brand i{
+
+    margin-right:10px;
+
+}
+
+.card{
+
+    border:none;
+    border-radius:14px;
+    box-shadow:0 3px 12px rgba(0,0,0,.12);
+    transition:.25s;
+
+}
+
+.card:hover{
+
+    transform:translateY(-3px);
+    box-shadow:0 10px 22px rgba(0,0,0,.18);
+
+}
+
+.card-header{
+
+    background:white;
+    border:none;
+    font-weight:700;
+    font-size:18px;
+
+}
+
+.indicador{
+
+    height:130px;
+
+}
+
+.indicador .card-body{
+
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+
+}
+
+.indicador h6{
+
+    color:#666;
+    font-size:15px;
+    margin-bottom:12px;
+
+}
+
+.indicador h2{
+
+    font-size:34px;
+    font-weight:700;
+    color:var(--vermelho);
+
+}
+
+.form-select{
+
+    border-radius:10px;
+    margin-bottom:12px;
+
+}
+
+.btn-secondary{
+
+    border-radius:10px;
+
+}
+
+.btn-light{
+
+    font-weight:600;
+
+}
+
+canvas{
+
+    width:100% !important;
+    height:320px !important;
+
+}
+
+table{
+
+    font-size:14px;
+
+}
+
+thead{
+
+    background:var(--vermelho);
+    color:white;
+
+}
+
+.dataTables_wrapper{
+
+    padding-top:10px;
+
+}
+
+.dataTables_filter input{
+
+    border-radius:8px;
+    border:1px solid #ccc;
+    padding:5px 10px;
+
+}
+
+.dataTables_length select{
+
+    border-radius:8px;
+
+}
+
+tbody tr:hover{
+
+    background:#fff5f5;
+
+}
+
+.card-body{
+
+    overflow:auto;
+
+}
+
+#tabelaFrota{
+
+    width:100%;
+
+}
+
+.sidebar{
+
+    background:white;
+    border-radius:14px;
+    box-shadow:0 3px 12px rgba(0,0,0,.12);
+    padding:15px;
+
+}
+
+footer{
+
+    margin-top:25px;
+    text-align:center;
+    color:#666;
+    font-size:13px;
+
+}
+
+/* Scroll */
+
+::-webkit-scrollbar{
+
+    width:8px;
+
+}
+
+::-webkit-scrollbar-thumb{
+
+    background:#b00020;
+    border-radius:10px;
+
+}
+
+::-webkit-scrollbar-track{
+
+    background:#ececec;
+
+}
+
+/* RESPONSIVO */
+
+@media(max-width:1200px){
+
+.indicador{
+
+    margin-bottom:20px;
+
+}
+
+}
+
+@media(max-width:992px){
+
+.navbar-brand{
+
+    font-size:18px;
+
+}
+
+.indicador h2{
+
+    font-size:26px;
+
+}
+
+canvas{
+
+    height:260px !important;
+
+}
+
+}
+
+@media(max-width:768px){
+
+.navbar{
+
+    height:auto;
+    padding:10px;
+
+}
+
+.indicador{
+
+    margin-bottom:15px;
+
+}
+
+canvas{
+
+    height:230px !important;
+
+}
+
+.card-header{
+
+    text-align:center;
+
+}
+
+}
+
+@media(max-width:576px){
+
+.indicador h2{
+
+    font-size:22px;
+
+}
+
+.indicador h6{
+
+    font-size:13px;
+
+}
+
+}
