@@ -1,307 +1,261 @@
-﻿/********************************************************************
- * Painel da Frota do CBMMG
+/********************************************************************
+ * Painel da Frota CBMMG
  * dados.js
  *
- * Responsável pela leitura da Carta de Situação
- * diretamente do Google Sheets.
+ * Responsável por baixar e tratar os dados do Google Sheets.
  ********************************************************************/
 
 "use strict";
 
 /********************************************************************
- * Carrega os dados do Google Sheets
+ * Carrega o CSV publicado pelo Google Sheets
  ********************************************************************/
 async function carregarDados() {
 
     log("Conectando ao Google Sheets...");
 
-    const resposta = await fetch(CONFIG.URL_CSV + "&t=" + Date.now());
+    const resposta = await fetch(CONFIG.URL_CSV);
 
     if (!resposta.ok) {
 
         throw new Error(
-
             "Não foi possível acessar a Carta de Situação."
-
         );
 
     }
 
-    const textoCSV = await resposta.text();
+    const csv = await resposta.text();
 
-    const registros = converterCSV(textoCSV);
+    const registros = XLSX.utils.sheet_to_json(
+
+        XLSX.read(csv, {
+
+            type: "string"
+
+        }).Sheets.Sheet1,
+
+        {
+
+            defval: "",
+            raw: false
+
+        }
+
+    );
+
+    if (registros.length === 0) {
+
+        throw new Error(
+            "A Carta de Situação está vazia."
+        );
+
+    }
+
+    log("Registros encontrados: " + registros.length);
 
     validarColunas(registros);
 
-    const dados = prepararDados(registros);
-
-    log(
-
-        `${dados.length} registros carregados.`
-
-    );
-
-    return dados;
+    return registros.map(prepararRegistro);
 
 }
 
 /********************************************************************
- * Converte o CSV em objetos JavaScript
+ * Prepara um registro
  ********************************************************************/
-function converterCSV(csv) {
+function prepararRegistro(registro) {
 
-    const linhas = csv.trim().split(/\r?\n/);
+    return classificarRegistro({
 
-    if (linhas.length < 2) {
+        prefixo:
 
-        throw new Error(
+            limparTexto(
+                obterValor(registro, CONFIG.COLUNAS.PREFIXO)
+            ),
 
-            "A Carta de Situação está vazia."
+        placa:
 
-        );
+            limparTexto(
+                obterValor(registro, CONFIG.COLUNAS.PLACA)
+            ),
 
-    }
+        unidade:
 
-    const cabecalho = dividirLinhaCSV(linhas[0]);
+            limparTexto(
+                obterValor(registro, CONFIG.COLUNAS.UNIDADE)
+            ),
 
-    const registros = [];
+        comando:
 
-    for (let i = 1; i < linhas.length; i++) {
+            limparTexto(
+                obterValor(registro, CONFIG.COLUNAS.COMANDO)
+            ),
 
-        if (linhas[i].trim() === "")
-            continue;
+        subclasse:
 
-        const valores = dividirLinhaCSV(linhas[i]);
+            limparTexto(
+                obterValor(registro, CONFIG.COLUNAS.SUBCLASSE)
+            ),
 
-        const objeto = {};
+        combustivel:
 
-        cabecalho.forEach((coluna, indice) => {
+            limparTexto(
+                obterValor(registro, CONFIG.COLUNAS.COMBUSTIVEL)
+            ),
 
-            objeto[coluna.trim()] =
+        situacao:
 
-                valores[indice] ??
+            limparTexto(
+                obterValor(registro, CONFIG.COLUNAS.SITUACAO)
+            ),
 
-                "";
+        marca:
 
-        });
+            limparTexto(
+                obterValor(registro, CONFIG.COLUNAS.MARCA)
+            ),
 
-        registros.push(objeto);
+        modelo:
 
-    }
+            limparTexto(
+                obterValor(registro, CONFIG.COLUNAS.MODELO)
+            ),
 
-    return registros;
+        ano:
 
-}
+            paraNumero(
+                obterValor(registro, CONFIG.COLUNAS.ANO)
+            ),
 
-/********************************************************************
- * Divide corretamente uma linha CSV
- * (respeitando campos entre aspas)
- ********************************************************************/
-function dividirLinhaCSV(linha) {
+        valorVenal:
 
-    const resultado = [];
+            paraNumero(
+                obterValor(registro, CONFIG.COLUNAS.VALOR_VENAL)
+            ),
 
-    let texto = "";
+        hodometro:
 
-    let aspas = false;
+            paraNumero(
+                obterValor(registro, CONFIG.COLUNAS.HODOMETRO)
+            ),
 
-    for (let i = 0; i < linha.length; i++) {
-
-        const caractere = linha[i];
-
-        if (caractere === '"') {
-
-            aspas = !aspas;
-
-            continue;
-
-        }
-
-        if (caractere === "," && !aspas) {
-
-            resultado.push(texto);
-
-            texto = "";
-
-            continue;
-
-        }
-
-        texto += caractere;
-
-    }
-
-    resultado.push(texto);
-
-    return resultado;
-
-}
-
-/********************************************************************
- * Valida se todas as colunas obrigatórias existem
- ********************************************************************/
-function validarColunas(registros) {
-
-    if (!registros.length) {
-
-        throw new Error(
-
-            "Nenhum registro encontrado."
-
-        );
-
-    }
-
-    const colunas = Object.keys(registros[0]);
-
-    const obrigatorias = Object.values(CONFIG.COLUNAS);
-
-    const ausentes = obrigatorias.filter(
-
-        coluna => !colunas.includes(coluna)
-
-    );
-
-    if (ausentes.length > 0) {
-
-        throw new Error(
-
-            "As seguintes colunas não foram encontradas:\n\n" +
-
-            ausentes.join("\n")
-
-        );
-
-    }
-
-}
-
-/********************************************************************
- * Prepara os dados para utilização
- ********************************************************************/
-function prepararDados(registros) {
-
-    return registros.map(registro => {
-
-        return {
-
-            prefixo:
-
-                limparTexto(
-
-                    registro[CONFIG.COLUNAS.PREFIXO]
-
-                ),
-
-            placa:
-
-                limparTexto(
-
-                    registro[CONFIG.COLUNAS.PLACA]
-
-                ),
-
-            unidade:
-
-                limparTexto(
-
-                    registro[CONFIG.COLUNAS.UNIDADE]
-
-                ),
-
-            comando:
-
-                limparTexto(
-
-                    registro[CONFIG.COLUNAS.COMANDO]
-
-                ),
-
-            subclasse:
-
-                limparTexto(
-
-                    registro[CONFIG.COLUNAS.SUBCLASSE]
-
-                ),
-
-            combustivel:
-
-                limparTexto(
-
-                    registro[CONFIG.COLUNAS.COMBUSTIVEL]
-
-                ),
-
-            situacao:
-
-                limparTexto(
-
-                    registro[CONFIG.COLUNAS.SITUACAO]
-
-                ),
-
-            marca:
-
-                limparTexto(
-
-                    registro[CONFIG.COLUNAS.MARCA]
-
-                ),
-
-            modelo:
-
-                limparTexto(
-
-                    registro[CONFIG.COLUNAS.MODELO]
-
-                ),
-
-            ano:
-
-                paraNumero(
-
-                    registro[CONFIG.COLUNAS.ANO]
-
-                ),
-
-            valorVenal:
-
-                paraNumero(
-
-                    registro[CONFIG.COLUNAS.VALOR_VENAL]
-
-                ),
-
-            hodometro:
-
-                paraNumero(
-
-                    registro[CONFIG.COLUNAS.HODOMETRO]
-
-                ),
-
-            idade:
-
-                idadeVeiculo(
-
-                    registro[CONFIG.COLUNAS.ANO]
-
-                ),
-
-            registroOriginal: registro
-
-        };
+        registroOriginal: registro
 
     });
 
 }
 
 /********************************************************************
- * Atualiza os dados
+ * Procura automaticamente uma coluna
  ********************************************************************/
-async function recarregarDados() {
+function obterValor(registro, alternativas) {
 
-    return await carregarDados();
+    const mapa = {};
+
+    Object.keys(registro).forEach(chave => {
+
+        mapa[normalizar(chave)] = registro[chave];
+
+    });
+
+    for (const nome of alternativas) {
+
+        const chave = normalizar(nome);
+
+        if (mapa[chave] !== undefined) {
+
+            return mapa[chave];
+
+        }
+
+    }
+
+    return "";
+
+}
+
+/********************************************************************
+ * Normaliza nomes
+ ********************************************************************/
+function normalizar(texto) {
+
+    return removerAcentos(texto)
+
+        .toUpperCase()
+
+        .replace(/\s+/g, " ")
+
+        .trim();
+
+}
+
+/********************************************************************
+ * Verifica se todas as colunas existem
+ ********************************************************************/
+function validarColunas(registros) {
+
+    const colunas = Object.keys(registros[0]);
+
+    const existentes = colunas.map(normalizar);
+
+    const faltando = [];
+
+    for (const campo in CONFIG.COLUNAS) {
+
+        const alternativas = CONFIG.COLUNAS[campo];
+
+        const encontrou = alternativas.some(
+
+            coluna => existentes.includes(
+
+                normalizar(coluna)
+
+            )
+
+        );
+
+        if (!encontrou) {
+
+            faltando.push({
+
+                campo,
+
+                alternativas
+
+            });
+
+        }
+
+    }
+
+    if (faltando.length > 0) {
+
+        let mensagem =
+
+            "Não foi possível localizar algumas colunas.\n\n";
+
+        faltando.forEach(item => {
+
+            mensagem +=
+
+                item.campo + "\n";
+
+            mensagem +=
+
+                "Aceitos: "
+
+                + item.alternativas.join(", ")
+
+                + "\n\n";
+
+        });
+
+        mensagem +=
+            "Colunas encontradas:\n\n";
+
+        mensagem += colunas.join("\n");
+
+        throw new Error(mensagem);
+
+    }
 
 }
