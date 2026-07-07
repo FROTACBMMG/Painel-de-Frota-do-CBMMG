@@ -103,7 +103,17 @@ const CONFIG = {
     "NOME DA UNIDADE DO VEÍCULO"
 ],
 
-        COMANDO: "COMANDO",
+        COMANDO: [
+    "COMANDO",
+    "Comando",
+    "Comando Op.",
+    "Comando Operacional",
+    "COMANDO OP.",
+    "COMANDO OPERACIONAL",
+    "Comando Op. de Bombeiros",
+    "COMANDO OP. DE BOMBEIROS",
+    "NOME DA UNIDADE DO VEÍCULO"
+],
 
         SUBCLASSE: "SUBCLASSE VEÍCULO",
 
