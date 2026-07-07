@@ -115,9 +115,15 @@ const CONFIG = {
     "NOME DA UNIDADE DO VEÍCULO"
 ],
 
-        SUBCLASSE: "SUBCLASSE VEÍCULO",
+        SUBCLASSE: [
+            "SUBCLASSE VEÍCULO",
+            "SubClasse Veículo"
+],
 
-        COMBUSTIVEL: "COMBUSTÍVEL DETRAN",
+        COMBUSTIVEL: [
+            "COMBUSTÍVEL DETRAN",
+            "Combusstível Detran"
+],
 
         SITUACAO: [
     "Situação",
@@ -130,15 +136,32 @@ const CONFIG = {
     "SITUAÇÃO ATUAL DA VIATURA",
 ],
 
-        ANO: "ANO FABR",
+        ANO: [
+            "ANO FABR",
+            "Ano Fabricação",
+            "Ano de Fabricação"
+],
 
-        MARCA: "MARCA / MODELO",
+        MARCA: [
+            "MARCA / MODELO",
+            "Marca/Modelo"
 
-        MODELO: "MODELO/ANO",
+],
 
-        VALOR_VENAL: "VALOR VENAL VEÍCULO",
+        MODELO: [
+            "MODELO/ANO",
+            "Modelo/Ano"
+],
 
-        HODOMETRO: "HODÔMETRO"
+        VALOR_VENAL: [
+            "VALOR VENAL VEÍCULO",
+            "Valor Venal"
+],
+
+        HODOMETRO: [
+            "HODÔMETRO"
+            "Hodrometro"
+],
 
     },
 
