@@ -1,224 +1,183 @@
-﻿/********************************************************************
- * Painel da Frota do CBMMG
+/********************************************************************
+ * Painel da Frota CBMMG
  * config.js
  *
- * Configurações gerais do sistema.
+ * Configurações gerais do sistema
  ********************************************************************/
 
 "use strict";
 
 const CONFIG = {
 
-    //==============================================================
-    // Informações do Sistema
-    //==============================================================
-
-    SISTEMA: "Painel da Frota do CBMMG",
-
-    VERSAO: "1.0",
-
-    IDIOMA: "pt-BR",
-
-    //==============================================================
-    // Fonte de Dados
-    //==============================================================
+    /**************************************************************
+     * Fonte de Dados
+     **************************************************************/
 
     URL_CSV:
-    "https://docs.google.com/spreadsheets/d/e/2PACX-1vQXxyZKqbwCdiYmQ4jZhg774KdppOBxMxcXVsTT2yEQNrDdm2uaQ4r67TopD3tFytbfHei7KCVLKRdT/pub?gid=1799439273&single=true&output=csv",
+        "https://docs.google.com/spreadsheets/d/e/2PACX-1vQXxyZKqbwCdiYmQ4jZhg774KdppOBxMxcXVsTT2yEQNrDdm2uaQ4r67TopD3tFytbfHei7KCVLKRdT/pub?gid=1799439273&single=true&output=csv",
 
-    //==============================================================
-    // Atualização automática
-    //==============================================================
+    /**************************************************************
+     * Configurações Gerais
+     **************************************************************/
 
-    AUTO_REFRESH: false,
+    TITULO:
 
-    INTERVALO_REFRESH: 300000, // 5 minutos
+        "Painel da Frota do CBMMG",
 
-    //==============================================================
-    // Tabela
-    //==============================================================
+    VERSAO:
 
-    TABELA_LINHAS: 25,
+        "1.0",
 
-    //==============================================================
-    // Tema
-    //==============================================================
+    IDIOMA:
 
-    TEMA: "claro",
+        "pt-BR",
 
-    //==============================================================
-    // Cores Institucionais
-    //==============================================================
+    TABELA_LINHAS:
+
+        25,
+
+    /**************************************************************
+     * Cores Institucionais
+     **************************************************************/
 
     CORES: {
 
-        vermelho: "#C8102E",
+        vermelho: "#C62828",
 
-        vermelhoEscuro: "#9B001E",
-
-        amarelo: "#FFD200",
-
-        azul: "#004A8D",
+        vermelhoEscuro: "#8E0000",
 
         verde: "#2E7D32",
 
-        cinzaClaro: "#F4F6F8",
+        azul: "#1565C0",
 
-        cinzaEscuro: "#444444"
+        amarelo: "#F9A825",
+
+        cinza: "#ECEFF1"
 
     },
 
-    //==============================================================
-    // Colunas da Carta de Situação
-    //==============================================================
+    /**************************************************************
+     * Colunas da Carta de Situação
+     *
+     * O sistema procura qualquer um destes nomes.
+     **************************************************************/
 
     COLUNAS: {
 
         PREFIXO: [
-    "Prefixo",
-    "Prefixo da Viatura",
-    "Prefixo Viatura",
-    "PREFIXO",
-    "PREFIXO DA VIATURA",
-    "PREFIXO VIATURA"
-],
+
+            "Prefixo",
+
+            "Prefixo da Viatura",
+
+            "Prefixo Viatura"
+
+        ],
 
         PLACA: [
-    "Placa",
-    "Placa Atual",
-    "Placa Viatura",
-    "PLACA",
-    "PLACA ATUAL",
-    "PLACA VIATURA"
-],
+
+            "Placa",
+
+            "Placa Atual"
+
+        ],
 
         UNIDADE: [
-    "Nome da Unidade",
-    "Nome Unid.",
-    "Nome Unid. Veículo",
-    "Nome da Unidade do Veículo",
-    "NOME DA UNIDADE",
-    "NOME UNID.",
-    "NOME UNID. VEÍCULO",
-    "NOME DA UNIDADE DO VEÍCULO"
-],
+
+            "Nome da Unidade",
+
+            "Unidade",
+
+            "Unidade Responsável",
+
+            "Unidade Executora"
+
+        ],
 
         COMANDO: [
-    "COMANDO",
-    "Comando",
-    "Comando Op.",
-    "Comando Operacional",
-    "COMANDO OP.",
-    "COMANDO OPERACIONAL",
-    "Comando Op. de Bombeiros",
-    "COMANDO OP. DE BOMBEIROS",
-    "NOME DA UNIDADE DO VEÍCULO"
-],
+
+            "Comando",
+
+            "COB",
+
+            "BBM"
+
+        ],
 
         SUBCLASSE: [
-            "SUBCLASSE VEÍCULO",
-            "SubClasse Veículo"
-],
+
+            "Subclasse",
+
+            "Subclasse do Veículo",
+
+            "Tipo de Viatura"
+
+        ],
 
         COMBUSTIVEL: [
-            "COMBUSTÍVEL DETRAN",
-            "Combusstível Detran"
-],
+
+            "Combustível",
+
+            "Combustivel"
+
+        ],
 
         SITUACAO: [
-    "Situação",
-    "Situação da Viatura",
-    "Situação Atual",
-    "Situação Atual da Viatura",
-    "SITUAÇÃO",
-    "SITUAÇÃO DA VIATURA",
-    "SITUAÇÃO ATUAL",
-    "SITUAÇÃO ATUAL DA VIATURA",
-],
 
-        ANO: [
-            "ANO FABR",
-            "Ano Fabricação",
-            "Ano de Fabricação"
-],
+            "Situação",
+
+            "Situação da Viatura",
+
+            "Situação Atual"
+
+        ],
 
         MARCA: [
-            "MARCA / MODELO",
-            "Marca/Modelo"
 
-],
+            "Marca"
+
+        ],
 
         MODELO: [
-            "MODELO/ANO",
-            "Modelo/Ano"
-],
+
+            "Modelo"
+
+        ],
+
+        ANO: [
+
+            "Ano",
+
+            "Ano de Fabricação",
+
+            "Ano Fabricação"
+
+        ],
 
         VALOR_VENAL: [
-            "VALOR VENAL VEÍCULO",
-            "Valor Venal"
-],
+
+            "Valor Venal",
+
+            "Valor Venal (R$)",
+
+            "Valor FIPE",
+
+            "Valor"
+
+        ],
 
         HODOMETRO: [
-            "HODÔMETRO"
-            "Hodrometro"
-],
 
-    },
+            "Hodômetro",
 
-    //==============================================================
-    // Situações consideradas operacionais
-    //==============================================================
+            "Hodometro",
 
-    SITUACOES_OPERACIONAIS: [
+            "Quilometragem",
 
-        "OPERACIONAL"
+            "KM"
 
-    ],
+        ]
 
-    //==============================================================
-    // Situações consideradas manutenção
-    //==============================================================
-
-    SITUACOES_MANUTENCAO: [
-
-        "MANUTENCAO",
-
-        "OFICINA",
-
-        "AGUARDANDO PEÇAS",
-
-        "AGUARDANDO PECAS"
-
-    ],
-
-    //==============================================================
-    // Combustíveis aceitos
-    //==============================================================
-
-    COMBUSTIVEIS: [
-
-        "DIESEL",
-
-        "FLEX",
-
-        "GASOLINA",
-
-        "ETANOL",
-
-        "ELÉTRICO",
-
-        "HIBRIDO"
-
-    ]
+    }
 
 };
-
-/********************************************************************
- * Inicialização automática
- ********************************************************************/
-
-console.log(
-
-    `${CONFIG.SISTEMA} - Versão ${CONFIG.VERSAO}`
-
-);
