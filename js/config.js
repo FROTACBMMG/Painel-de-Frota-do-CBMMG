@@ -74,29 +74,61 @@ const CONFIG = {
 
     COLUNAS: {
 
-        PREFIXO: "Prefixo da Viatura",
+        PREFIXO: [
+    "Prefixo",
+    "Prefixo da Viatura",
+    "Prefixo Viatura",
+    "PREFIXO",
+    "PREFIXO DA VIATURA",
+    "PREFIXO VIATURA"
+],
 
-        PLACA: "Placa",
+        PLACA: [
+    "Placa",
+    "Placa Atual",
+    "Placa Viatura",
+    "PLACA",
+    "PLACA ATUAL",
+    "PLACA VIATURA"
+],
 
-        UNIDADE: "Nome da Unidade",
+        UNIDADE: [
+    "Nome da Unidade",
+    "Nome Unid.",
+    "Nome Unid. Veículo",
+    "Nome da Unidade do Veículo",
+    "NOME DA UNIDADE",
+    "NOME UNID.",
+    "NOME UNID. VEÍCULO",
+    "NOME DA UNIDADE DO VEÍCULO"
+],
 
-        COMANDO: "Comando",
+        COMANDO: "COMANDO",
 
-        SUBCLASSE: "Subclasse do Veículo",
+        SUBCLASSE: "SUBCLASSE VEÍCULO",
 
-        COMBUSTIVEL: "Combustível",
+        COMBUSTIVEL: "COMBUSTÍVEL DETRAN",
 
-        SITUACAO: "Situação",
+        SITUACAO: [
+    "Situação",
+    "Situação da Viatura",
+    "Situação Atual",
+    "Situação Atual da Viatura",
+    "SITUAÇÃO",
+    "SITUAÇÃO DA VIATURA",
+    "SITUAÇÃO ATUAL",
+    "SITUAÇÃO ATUAL DA VIATURA",
+],
 
-        ANO: "Ano de Fabricação",
+        ANO: "ANO FABR",
 
-        MARCA: "Marca",
+        MARCA: "MARCA / MODELO",
 
-        MODELO: "Modelo",
+        MODELO: "MODELO/ANO",
 
-        VALOR_VENAL: "Valor Venal",
+        VALOR_VENAL: "VALOR VENAL VEÍCULO",
 
-        HODOMETRO: "Hodômetro"
+        HODOMETRO: "HODÔMETRO"
 
     },
 
