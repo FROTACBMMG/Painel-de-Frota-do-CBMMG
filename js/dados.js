@@ -51,86 +51,40 @@ function criarMapa(colunas) {
         const nome = removerAcentos(coluna)
             .toUpperCase();
 
-        if (nome.includes("PLACA"))
+        if (nome === "PLACA")
             MAPA.placa = coluna;
 
-        else if (
-            nome.includes("PREFIXO")
-        )
+        else if (nome.includes("PREFIXO"))
             MAPA.prefixo = coluna;
 
-        else if (
-            nome.includes("SUBCLASSE")
-        )
+        else if (nome.includes("SUBCLASSE"))
             MAPA.subclasse = coluna;
 
-        else if (
-            nome.includes("COMANDO")
-        )
+        else if (nome === "COMANDO")
             MAPA.comando = coluna;
 
-        else if (
-
-            nome.includes("NOME UNID")
-
-        )
-
+        else if (nome.includes("NOME UNID"))
             MAPA.unidade = coluna;
 
-        else if (
-
-            nome.includes("SITUA")
-
-        )
-
+        else if (nome === "SITUAÇÃO")
             MAPA.situacao = coluna;
 
-        else if (
-
-            nome.includes("COMBUST")
-
-        )
-
+        else if (nome.includes("COMBUST"))
             MAPA.combustivel = coluna;
 
-        else if (
-
-            nome.includes("HOD")
-
-        )
-
+        else if (nome.includes("HOD"))
             MAPA.hodometro = coluna;
 
-        else if (
-
-            nome.includes("VALOR VENAL")
-
-        )
-
+        else if (nome.includes("VALOR VENAL"))
             MAPA.valorVenal = coluna;
 
-        else if (
-
-            nome.includes("ANO FABR")
-
-        )
-
+        else if (nome.includes("ANO FABR"))
             MAPA.ano = coluna;
 
-        else if (
-
-            nome.includes("MARCA")
-
-        )
-
+        else if (nome.includes("MARCA"))
             MAPA.marcaModelo = coluna;
 
-        else if (
-
-            nome.includes("MODELO/ANO")
-
-        )
-
+        else if (nome.includes("MODELO/ANO"))
             MAPA.modeloAno = coluna;
 
     });
