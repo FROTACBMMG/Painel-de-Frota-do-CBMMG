@@ -26,6 +26,8 @@ async function carregarDados() {
 
     const csv = await resposta.text();
 
+    console.log(csv.substring(0,1000));
+
     const registros = XLSX.utils.sheet_to_json(
 
         XLSX.read(csv, {
