@@ -45,36 +45,47 @@ function atualizarTotalFrota(dados){
 /********************************************************************
  * Operacionais
  ********************************************************************/
-function atualizarOperacionais(dados){
+function atualizarOperacionais(dados) {
 
-    const total = dados.filter(
+    const total = dados.filter(item => {
 
-        v => CONFIG.SITUACOES_OPERACIONAIS.includes(v.situacao)
+        if (!item) {
+            console.log("Registro inexistente");
+            return false;
+        }
 
-    ).length;
+        if (!item.situacao) {
+            console.log("Registro sem situação:", item);
+            return false;
+        }
 
-    atualizarTexto(
-        "operacionais",
-        inteiro(total)
-    );
+        return item.situacao
+            .toUpperCase()
+            .includes("OPER");
+
+    }).length;
+
+    atualizarTexto("operacionais", inteiro(total));
 
 }
 
 /********************************************************************
  * Em Manutenção
  ********************************************************************/
-function atualizarManutencao(dados){
+function atualizarManutencao(dados) {
 
-    const total = dados.filter(
+    const total = dados.filter(item => {
 
-        v => CONFIG.SITUACOES_MANUTENCAO.includes(v.situacao)
+        if (!item || !item.situacao)
+            return false;
 
-    ).length;
+        return item.situacao
+            .toUpperCase()
+            .includes("MANUT");
 
-    atualizarTexto(
-        "manutencao",
-        inteiro(total)
-    );
+    }).length;
+
+    atualizarTexto("manutencao", inteiro(total));
 
 }
 
