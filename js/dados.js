@@ -66,7 +66,7 @@ function criarMapa(colunas) {
         else if (nome.includes("NOME UNID"))
             MAPA.unidade = coluna;
 
-        else if (nome === "SITUAÇÃO")
+        else if (nome === "SITUACAO")
             MAPA.situacao = coluna;
 
         else if (nome.includes("COMBUST"))
