@@ -151,6 +151,10 @@ function prepararRegistro(registro) {
  ********************************************************************/
 function obterValor(registro, alternativas) {
 
+    console.log(alternativas);
+    console.log(typeof alternativas);
+    console.log(Array.isArray(alternativas));
+
     const mapa = {};
 
     Object.keys(registro).forEach(chave => {
