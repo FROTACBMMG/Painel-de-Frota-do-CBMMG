@@ -1,267 +1,206 @@
 /********************************************************************
- * Painel da Frota CBMMG
+ * Painel da Frota do CBMMG
  * dados.js
- *
- * Responsável por baixar e tratar os dados do Google Sheets.
  ********************************************************************/
 
 "use strict";
 
-/********************************************************************
- * Carrega o CSV publicado pelo Google Sheets
- ********************************************************************/
+let MAPA = {};
+
+/*********************************************************/
 async function carregarDados() {
 
     log("Conectando ao Google Sheets...");
 
     const resposta = await fetch(CONFIG.URL_CSV);
 
-    if (!resposta.ok) {
-
-        throw new Error(
-            "Não foi possível acessar a Carta de Situação."
-        );
-
-    }
+    if (!resposta.ok)
+        throw new Error("Não foi possível acessar o Google Sheets.");
 
     const csv = await resposta.text();
 
-    console.log(csv.substring(0,1000));
+    const workbook = XLSX.read(csv, {
+        type: "string"
+    });
 
-    const registros = XLSX.utils.sheet_to_json(
+    const planilha = workbook.Sheets[workbook.SheetNames[0]];
 
-        XLSX.read(csv, {
+    const registros = XLSX.utils.sheet_to_json(planilha, {
 
-            type: "string"
+        raw: false,
+        defval: ""
 
-        }).Sheets.Sheet1,
+    });
 
-        {
+    if (!registros.length)
+        throw new Error("Carta de Situação vazia.");
 
-            defval: "",
-            raw: false
-
-        }
-
-    );
-
-    if (registros.length === 0) {
-
-        throw new Error(
-            "A Carta de Situação está vazia."
-        );
-
-    }
-
-    log("Registros encontrados: " + registros.length);
-
-    validarColunas(registros);
+    criarMapa(Object.keys(registros[0]));
 
     return registros.map(prepararRegistro);
 
 }
 
-/********************************************************************
- * Prepara um registro
- ********************************************************************/
+/*********************************************************/
+function criarMapa(colunas) {
+
+    MAPA = {};
+
+    colunas.forEach(coluna => {
+
+        const nome = removerAcentos(coluna)
+            .toUpperCase();
+
+        if (nome.includes("PLACA"))
+            MAPA.placa = coluna;
+
+        else if (
+            nome.includes("PREFIXO")
+        )
+            MAPA.prefixo = coluna;
+
+        else if (
+            nome.includes("SUBCLASSE")
+        )
+            MAPA.subclasse = coluna;
+
+        else if (
+            nome.includes("COMANDO")
+        )
+            MAPA.comando = coluna;
+
+        else if (
+
+            nome.includes("NOME UNID")
+
+        )
+
+            MAPA.unidade = coluna;
+
+        else if (
+
+            nome.includes("SITUA")
+
+        )
+
+            MAPA.situacao = coluna;
+
+        else if (
+
+            nome.includes("COMBUST")
+
+        )
+
+            MAPA.combustivel = coluna;
+
+        else if (
+
+            nome.includes("HOD")
+
+        )
+
+            MAPA.hodometro = coluna;
+
+        else if (
+
+            nome.includes("VALOR VENAL")
+
+        )
+
+            MAPA.valorVenal = coluna;
+
+        else if (
+
+            nome.includes("ANO FABR")
+
+        )
+
+            MAPA.ano = coluna;
+
+        else if (
+
+            nome.includes("MARCA")
+
+        )
+
+            MAPA.marcaModelo = coluna;
+
+        else if (
+
+            nome.includes("MODELO/ANO")
+
+        )
+
+            MAPA.modeloAno = coluna;
+
+    });
+
+    console.table(MAPA);
+
+}
+
+/*********************************************************/
 function prepararRegistro(registro) {
+
+    let marca = "";
+    let modelo = "";
+
+    if (MAPA.marcaModelo) {
+
+        const partes = registro[MAPA.marcaModelo].split("/");
+
+        marca = partes[0] || "";
+
+        modelo = partes.slice(1).join("/");
+
+    }
 
     return classificarRegistro({
 
         prefixo:
-
-            limparTexto(
-                obterValor(registro, CONFIG.COLUNAS.PREFIXO)
-            ),
+            limparTexto(registro[MAPA.prefixo]),
 
         placa:
-
-            limparTexto(
-                obterValor(registro, CONFIG.COLUNAS.PLACA)
-            ),
+            limparTexto(registro[MAPA.placa]),
 
         unidade:
-
-            limparTexto(
-                obterValor(registro, CONFIG.COLUNAS.UNIDADE)
-            ),
+            limparTexto(registro[MAPA.unidade]),
 
         comando:
-
-            limparTexto(
-                obterValor(registro, CONFIG.COLUNAS.COMANDO)
-            ),
+            limparTexto(registro[MAPA.comando]),
 
         subclasse:
-
-            limparTexto(
-                obterValor(registro, CONFIG.COLUNAS.SUBCLASSE)
-            ),
-
-        combustivel:
-
-            limparTexto(
-                obterValor(registro, CONFIG.COLUNAS.COMBUSTIVEL)
-            ),
+            limparTexto(registro[MAPA.subclasse]),
 
         situacao:
+            limparTexto(registro[MAPA.situacao]),
 
-            limparTexto(
-                obterValor(registro, CONFIG.COLUNAS.SITUACAO)
-            ),
+        combustivel:
+            limparTexto(registro[MAPA.combustivel]),
 
         marca:
-
-            limparTexto(
-                obterValor(registro, CONFIG.COLUNAS.MARCA)
-            ),
+            limparTexto(marca),
 
         modelo:
-
-            limparTexto(
-                obterValor(registro, CONFIG.COLUNAS.MODELO)
-            ),
+            limparTexto(modelo),
 
         ano:
-
-            paraNumero(
-                obterValor(registro, CONFIG.COLUNAS.ANO)
-            ),
-
-        valorVenal:
-
-            paraNumero(
-                obterValor(registro, CONFIG.COLUNAS.VALOR_VENAL)
-            ),
+            paraNumero(registro[MAPA.ano]),
 
         hodometro:
+            paraNumero(registro[MAPA.hodometro]),
 
-            paraNumero(
-                obterValor(registro, CONFIG.COLUNAS.HODOMETRO)
+        valorVenal:
+            paraNumero(registro[MAPA.valorVenal]),
+
+        idade:
+            idadeVeiculo(
+                registro[MAPA.ano]
             ),
 
-        registroOriginal: registro
+        registroOriginal:
+            registro
 
     });
-
-}
-
-/********************************************************************
- * Procura automaticamente uma coluna
- ********************************************************************/
-function obterValor(registro, alternativas) {
-
-    console.log(alternativas);
-    console.log(typeof alternativas);
-    console.log(Array.isArray(alternativas));
-
-    const mapa = {};
-
-    Object.keys(registro).forEach(chave => {
-
-        mapa[normalizar(chave)] = registro[chave];
-
-    });
-
-    for (const nome of alternativas) {
-
-        const chave = normalizar(nome);
-
-        if (mapa[chave] !== undefined) {
-
-            return mapa[chave];
-
-        }
-
-    }
-
-    return "";
-
-}
-
-/********************************************************************
- * Normaliza nomes
- ********************************************************************/
-function normalizar(texto) {
-
-    return removerAcentos(texto)
-
-        .toUpperCase()
-
-        .replace(/\s+/g, " ")
-
-        .trim();
-
-}
-
-/********************************************************************
- * Verifica se todas as colunas existem
- ********************************************************************/
-function validarColunas(registros) {
-
-    const colunas = Object.keys(registros[0]);
-
-    const existentes = colunas.map(normalizar);
-
-    const faltando = [];
-
-    for (const campo in CONFIG.COLUNAS) {
-
-        const alternativas = CONFIG.COLUNAS[campo];
-
-        const encontrou = alternativas.some(
-
-            coluna => existentes.includes(
-
-                normalizar(coluna)
-
-            )
-
-        );
-
-        if (!encontrou) {
-
-            faltando.push({
-
-                campo,
-
-                alternativas
-
-            });
-
-        }
-
-    }
-
-    if (faltando.length > 0) {
-
-        let mensagem =
-
-            "Não foi possível localizar algumas colunas.\n\n";
-
-        faltando.forEach(item => {
-
-            mensagem +=
-
-                item.campo + "\n";
-
-            mensagem +=
-
-                "Aceitos: "
-
-                + item.alternativas.join(", ")
-
-                + "\n\n";
-
-        });
-
-        mensagem +=
-            "Colunas encontradas:\n\n";
-
-        mensagem += colunas.join("\n");
-
-        throw new Error(mensagem);
-
-    }
 
 }
