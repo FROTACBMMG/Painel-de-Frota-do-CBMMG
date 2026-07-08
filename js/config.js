@@ -84,97 +84,72 @@ const CONFIG = {
 
         UNIDADE: [
 
+            "NOME UNID. VEÍCULO",
+            "UNIDADE PRINCIPAL",
             "Nome da Unidade",
-
             "Unidade",
-
             "Unidade Responsável",
-
             "Unidade Executora"
-
-        ],
-
-        COMANDO: [
-
-            "Comando",
-
-            "COB",
-
-            "BBM"
 
         ],
 
         SUBCLASSE: [
 
-            "Subclasse",
-
+            "SUBCLASSE VEÍCULO",
             "Subclasse do Veículo",
-
+            "Subclasse",
             "Tipo de Viatura"
 
         ],
-
+    
         COMBUSTIVEL: [
 
+            "COMBUSTÍVEL DETRAN",
             "Combustível",
-
             "Combustivel"
-
-        ],
-
-        SITUACAO: [
-
-            "Situação",
-
-            "Situação da Viatura",
-
-            "Situação Atual"
 
         ],
 
         MARCA: [
 
+            "MARCA / MODELO",
             "Marca"
 
         ],
 
         MODELO: [
 
+            "MODELO/ANO",
             "Modelo"
 
         ],
 
         ANO: [
 
+            "ANO FABR",
             "Ano",
-
-            "Ano de Fabricação",
-
-            "Ano Fabricação"
+            "Ano de Fabricação"
 
         ],
 
-        VALOR_VENAL: [
+            VALOR_VENAL: [
 
+            "VALOR VENAL VEÍCULO",
             "Valor Venal",
-
             "Valor Venal (R$)",
-
-            "Valor FIPE",
-
-            "Valor"
+            "Valor FIPE"
 
         ],
 
-        HODOMETRO: [
+            HODOMETRO: [
 
-            "Hodômetro",
+                "Hodômetro",
 
-            "Hodometro",
+                "Hodometro",
 
-            "Quilometragem",
+                "Quilometragem",
 
-            "KM"
+                "KM"
 
         ]
 
