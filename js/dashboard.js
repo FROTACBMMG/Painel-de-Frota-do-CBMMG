@@ -124,7 +124,8 @@ function atualizarDisponibilidade(dados){
 
     const operacionais = dados.filter(
 
-        v=>CONFIG.SITUACOES_OPERACIONAIS.includes(v.situacao)
+        v=> v.situacao &&
+            v.situacao.toUpperCase().includes("OPER")
 
     ).length;
 
@@ -235,7 +236,8 @@ function obterResumoDashboard(dados){
 
     const manutencao = dados.filter(
 
-        v=>CONFIG.SITUACOES_MANUTENCAO.includes(v.situacao)
+        v=> v.situacao &&
+            v.situacao.toUpperCase().includes("MANUT")
 
     ).length;
 
