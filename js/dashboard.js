@@ -45,7 +45,7 @@ function atualizarTotalFrota(dados){
 /********************************************************************
  * Operacionais
  ********************************************************************/
-function atualizarOperacionais(dados) {
+function atualizarDisponivel(dados) {
 
     const total = dados.filter(item => {
 
