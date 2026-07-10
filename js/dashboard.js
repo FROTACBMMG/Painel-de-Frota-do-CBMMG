@@ -65,7 +65,7 @@ function atualizarDisponivel(dados) {
 
     }).length;
 
-    atualizarTexto("operacionais", inteiro(total));
+    atualizarTexto("disponiveis", inteiro(total));
 
 }
 
