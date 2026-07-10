@@ -109,13 +109,28 @@ function atualizarValorVenal(dados){
 /********************************************************************
  * Disponibilidade (%)
  ********************************************************************/
-const disponibilidade =
+function atualizarDisponibilidade(dados){
+
+    if(dados.length===0){
+
+        atualizarTexto(
+            "disponibilidade",
+            "0%"
+        );
+
+        return;
+
+    }
+
+    const disponibilidade =
     media(dados, "indiceDisponibilidade");
 
 atualizarTexto(
     "disponibilidade",
     disponibilidade.toFixed(1) + "%"
 );
+
+}
 
 /********************************************************************
  * Idade Média
