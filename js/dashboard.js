@@ -14,7 +14,7 @@ function atualizarIndicadores(dados) {
 
     atualizarTotalFrota(dados);
 
-    atualizarOperacionais(dados);
+    atualizarDisponivel(dados);
 
     atualizarManutencao(dados);
 
@@ -61,7 +61,7 @@ function atualizarOperacionais(dados) {
 
         return item.situacao
             .toUpperCase()
-            .includes("OPER");
+            .includes("DISPONÍVEL");
 
     }).length;
 
