@@ -75,6 +75,9 @@ function criarMapa(colunas) {
         else if (nome.includes("HOD"))
             MAPA.hodometro = coluna;
 
+        else if (nome === "INDICE DE DISPON")
+            MAPA.indiceDisponibilidade = coluna;
+
         else if (nome.includes("VALOR VENAL"))
             MAPA.valorVenal = coluna;
 
@@ -143,7 +146,10 @@ function prepararRegistro(registro) {
 
         hodometro:
             paraNumero(registro[MAPA.hodometro]),
-
+        
+        indiceDisponibilidade: 
+            paraNumero(registro[MAPA.indiceDisponibilidade]),
+        
         valorVenal:
             paraNumero(registro[MAPA.valorVenal]),
 
