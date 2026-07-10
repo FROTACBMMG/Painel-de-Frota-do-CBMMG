@@ -122,13 +122,13 @@ function atualizarDisponibilidade(dados){
 
     }
 
-    const disponibilidade =
-    media(dados, "indiceDisponibilidade");
+    const mediaDisponibilidade =
+        media(dados, "indiceDisponibilidade");
 
-atualizarTexto(
-    "disponibilidade",
-    disponibilidade.toFixed(1) + "%"
-);
+    atualizarTexto(
+        "disponibilidade",
+        mediaDisponibilidade.toFixed(2) + "%"
+    );
 
 }
 
