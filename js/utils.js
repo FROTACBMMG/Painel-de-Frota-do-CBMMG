@@ -24,19 +24,24 @@ function estaVazio(valor) {
 // ======================================================
 function paraNumero(valor) {
 
-    if (estaVazio(valor))
+    if (valor === null || valor === undefined)
         return 0;
 
     if (typeof valor === "number")
         return valor;
 
-    valor = valor.toString();
+    valor = valor.toString().trim();
+
+    if (valor === "")
+        return 0;
 
     valor = valor
+        .replace(/R\$/g, "")
+        .replace(/\s/g, "")
         .replace(/\./g, "")
         .replace(",", ".");
 
-    const numero = parseFloat(valor);
+    const numero = Number(valor);
 
     return isNaN(numero) ? 0 : numero;
 
