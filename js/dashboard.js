@@ -43,7 +43,7 @@ function atualizarTotalFrota(dados){
 }
 
 /********************************************************************
- * Operacionais
+ * Disponíveis
  ********************************************************************/
 function atualizarDisponivel(dados) {
 
@@ -109,39 +109,13 @@ function atualizarValorVenal(dados){
 /********************************************************************
  * Disponibilidade (%)
  ********************************************************************/
-function atualizarDisponibilidade(dados){
+const disponibilidade =
+    media(dados, "indiceDisponibilidade");
 
-    if(dados.length===0){
-
-        atualizarTexto(
-            "disponibilidade",
-            "0%"
-        );
-
-        return;
-
-    }
-
-    const operacionais = dados.filter(
-
-        v=> v.situacao &&
-            v.situacao.toUpperCase().includes("OPER")
-
-    ).length;
-
-    const percentual =
-
-        (operacionais*100)/dados.length;
-
-    atualizarTexto(
-
-        "disponibilidade",
-
-        percentual.toFixed(1)+"%"
-
-    );
-
-}
+atualizarTexto(
+    "disponibilidade",
+    disponibilidade.toFixed(1) + "%"
+);
 
 /********************************************************************
  * Idade Média
