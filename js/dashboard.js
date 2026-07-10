@@ -61,7 +61,7 @@ function atualizarDisponivel(dados) {
 
         return item.situacao
             .toUpperCase()
-            .includes("DISPONÍVEL");
+            .includes("DISPONIVEL");
 
     }).length;
 
@@ -219,7 +219,9 @@ function obterResumoDashboard(dados){
 
     const operacionais = dados.filter(
 
-        v=>CONFIG.SITUACOES_OPERACIONAIS.includes(v.situacao)
+        v =>
+
+            v.situacao === "DISPONIVEL"
 
     ).length;
 
