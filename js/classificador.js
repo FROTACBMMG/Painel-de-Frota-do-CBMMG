@@ -16,9 +16,14 @@ function classificarSituacao(situacao) {
         limparTexto(situacao)
     ).toUpperCase();
 
-    if (situacao.includes("OPER"))
-        return "OPERACIONAL";
+    // DISPONÍVEL
+    if (
+        situacao.includes("DISPONIVEL") ||
+        situacao.includes("OPER")
+    )
+        return "DISPONIVEL";
 
+    // MANUTENÇÃO
     if (
         situacao.includes("MANUT") ||
         situacao.includes("OFICINA") ||
@@ -26,14 +31,15 @@ function classificarSituacao(situacao) {
     )
         return "MANUTENCAO";
 
+    // BAIXADA
     if (
-        situacao.includes("BAIX") ||
-        situacao.includes("ALIEN")
+        situacao.includes("BAIX")
     )
         return "BAIXADA";
 
+    // SINISTRADA
     if (
-        situacao.includes("SINIST")
+        situacao.includes("SINISTR")
     )
         return "SINISTRADA";
 
