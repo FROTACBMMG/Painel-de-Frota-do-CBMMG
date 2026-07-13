@@ -13,40 +13,26 @@
 
 function classificarSituacao(situacao) {
 
-    situacao = removerAcentos(
-        limparTexto(situacao)
-    ).toUpperCase();
+    const texto = normalizarTexto(situacao);
 
-    // DISPONÍVEL
-    if (
-        situacao.includes("DISPONIVEL") ||
-        situacao.includes("OPER")
-    )
+    if (texto.includes("DISPON")) {
         return "DISPONIVEL";
+    }
 
-    // MANUTENÇÃO
     if (
-        situacao.includes("MANUT") ||
-        situacao.includes("OFICINA") ||
-        situacao.includes("AGUARD")
-    )
+        texto.includes("BAIX") ||
+        texto.includes("ACIDENT")
+    ) {
         return "MANUTENCAO";
+    }
 
-    // BAIXADA
-    if (
-        situacao.includes("BAIX")
-    )
-        return "BAIXADA";
-
-    // SINISTRADA
-    if (
-        situacao.includes("SINISTR")
-    )
-        return "SINISTRADA";
+    if (texto.includes("DESCARG")) {
+        return "OUTROS";
+    }
 
     return "OUTROS";
-
 }
+
 /********************************************************************
  * Padroniza combustível
  ********************************************************************/
