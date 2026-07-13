@@ -74,18 +74,16 @@ function atualizarDisponivel(dados) {
  ********************************************************************/
 function atualizarManutencao(dados) {
 
-    const total = dados.filter(item => {
+    const total = dados.filter(function(v){
 
-        if (!item || !item.situacao)
-            return false;
-
-        return item.situacao
-            .toUpperCase()
-            .includes("MANUT");
+        return v.situacao === "MANUTENCAO";
 
     }).length;
 
-    atualizarTexto("manutencao", inteiro(total));
+    atualizarTexto(
+        "manutencao",
+        inteiro(total)
+    );
 
 }
 
