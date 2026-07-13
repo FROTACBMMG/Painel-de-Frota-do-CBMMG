@@ -75,7 +75,7 @@ function criarMapa(colunas) {
         else if (nome.includes("HOD"))
             MAPA.hodometro = coluna;
 
-        else if (nome === "INDICE DE DISPON")
+        else if (nome.includes("INDICE DE DISPON"))
             MAPA.indiceDisponibilidade = coluna;
 
         else if (nome.includes("VALOR VENAL"))
