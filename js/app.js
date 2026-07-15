@@ -37,7 +37,7 @@ async function iniciarPainel() {
         dadosOriginais = await carregarDados();
 
         // Classifica a frota
-        dadosOriginais = classificarFrota(dadosOriginais);
+       // dadosOriginais = classificarFrota(dadosOriginais);
 
         // Cria uma cópia para filtros
         dadosFiltrados = [...dadosOriginais];
@@ -113,7 +113,7 @@ async function atualizarDados() {
 
         dadosOriginais = await carregarDados();
 
-        dadosOriginais = classificarFrota(dadosOriginais);
+        // dadosOriginais = classificarFrota(dadosOriginais);
 
         dadosFiltrados = [...dadosOriginais];
 
